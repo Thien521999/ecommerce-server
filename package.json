@@ -17,12 +17,19 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/formidable": "^3.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/lodash": "^4.17.20",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.5.0",
     "jiti": "^2.6.1",
+    "lodash": "^4.17.21",
     "nodemon": "^3.1.11",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.0",
@@ -30,5 +37,20 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.931.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "firebase-admin": "^13.6.0",
+    "formidable": "^3.5.4",
+    "jsonwebtoken": "^9.0.2",
+    "mime": "^4.1.0",
+    "minimist": "^1.2.8",
+    "node-cron": "^4.2.1",
+    "sharp": "^0.34.5",
+    "socket.io": "^4.8.1"
   }
 }
