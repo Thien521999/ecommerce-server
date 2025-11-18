@@ -3,9 +3,10 @@ import dotenv from 'dotenv'
 import express from 'express'
 import { createServer } from 'http'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
+import citiesRouter from './routes/cities.routes'
+import productsRouter from './routes/products.routes'
 import usersRouter from './routes/users.routes'
 import databaseService from './services/database.services'
-import productsRouter from './routes/products.routes'
 
 dotenv.config()
 
@@ -37,6 +38,7 @@ app.use(express.json())
 app.use('/auth', usersRouter)
 app.use('/users', usersRouter)
 app.use('/products', productsRouter)
+app.use('/cities', citiesRouter)
 
 app.use('/test', (req, res) => {
   res.send('This is a test endpoint.')

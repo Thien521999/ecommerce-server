@@ -99,3 +99,12 @@ export const PRODUCTS_MESSAGES = {
   UNLIKED_PRODUCT_SUCCESSFULLY: 'Unliked product successfully',
   DELETE_PRODUCTS_SUCCESS: 'Delete products success'
 } as const
+
+export const CITYS_MESSAGES = {
+  NAME_IS_REQUIRED: 'Name is required',
+  NAME_MUST_BE_A_STRING: 'Name must be a string',
+  NAME_ALREADY_EXISTS: 'Name already exists',
+  CREATE_CITY_SUCCESSFULLY: 'Create city successfully',
+  DELETE_CITY_SUCCESS: 'Delete city success',
+  GET_ALL_CITY: 'Get all city'
+} as const
