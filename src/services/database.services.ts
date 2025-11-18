@@ -1,5 +1,6 @@
 import { config } from 'dotenv'
 import { Collection, Db, MongoClient } from 'mongodb'
+import City from '~/models/schemas/City.schema'
 import Product from '~/models/schemas/Product.schema'
 // import Blog from '~/models/schemas/Blog.schema'
 // import Bookmark from '~/models/schemas/Bookmark.schema'
@@ -109,6 +110,9 @@ class DatabaseService {
   }
   get products(): Collection<Product> {
     return this.db.collection(process.env.DB_PRODUCTS_COLLECTION as string)
+  }
+  get citys(): Collection<City> {
+    return this.db.collection(process.env.DB_CITY_COLLECTION as string)
   }
   // get bookmarks(): Collection<Bookmark> {
   //   return this.db.collection(process.env.DB_BOOKMARKS_COLLECTION as string)
