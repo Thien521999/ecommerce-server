@@ -15,3 +15,8 @@ export enum TokenType {
 //   Image, // 0
 //   Video // 1
 // }
+
+export enum productStatus {
+  Inactive, // chưa xác thực email, mặc định 0
+  Active // đã xác thực email
+}

@@ -1,5 +1,6 @@
 import { config } from 'dotenv'
 import { Collection, Db, MongoClient } from 'mongodb'
+import Product from '~/models/schemas/Product.schema'
 // import Blog from '~/models/schemas/Blog.schema'
 // import Bookmark from '~/models/schemas/Bookmark.schema'
 // import Conversation from '~/models/schemas/Conversations.schema'
@@ -106,12 +107,9 @@ class DatabaseService {
   get refreshToken(): Collection<RefreshToken> {
     return this.db.collection(process.env.DB_REFRESH_TOKENS_COLLECTION as string)
   }
-  // get followers(): Collection<Follower> {
-  //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
-  // }
-  // get blogs(): Collection<Blog> {
-  //   return this.db.collection(process.env.DB_BLOGS_COLLECTION as string)
-  // }
+  get products(): Collection<Product> {
+    return this.db.collection(process.env.DB_PRODUCTS_COLLECTION as string)
+  }
   // get bookmarks(): Collection<Bookmark> {
   //   return this.db.collection(process.env.DB_BOOKMARKS_COLLECTION as string)
   // }
