@@ -155,7 +155,6 @@ export const productIdValidator = validate(
             }
 
             const product = await databaseService.products.findOne({ _id: new ObjectId(value) })
-            console.log({ product })
 
             if (!product) {
               throw new ErrorWithStatus({
@@ -191,7 +190,6 @@ export const productIdBodyValidator = validate(
             }
 
             const product = await databaseService.products.findOne({ _id: new ObjectId(value) })
-            console.log({ product })
 
             if (!product) {
               throw new ErrorWithStatus({

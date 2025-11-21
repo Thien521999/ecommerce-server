@@ -261,7 +261,6 @@ class ProductsService {
   async deleteManyProduct(productIds: string[]) {
     const validIds = productIds.filter((v) => ObjectId.isValid(v))
 
-    console.log({ validIds })
     if (validIds.length !== productIds.length) {
       // throw new Error('Có ID không hợp lệ')
       return {

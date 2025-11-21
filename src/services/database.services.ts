@@ -1,7 +1,10 @@
 import { config } from 'dotenv'
 import { Collection, Db, MongoClient } from 'mongodb'
 import City from '~/models/schemas/City.schema'
+import DeliveryType from '~/models/schemas/DeliveryType.schema'
+import PaymentType from '~/models/schemas/PaymentType.schema'
 import Product from '~/models/schemas/Product.schema'
+import ProductType from '~/models/schemas/ProductType.schema'
 // import Blog from '~/models/schemas/Blog.schema'
 // import Bookmark from '~/models/schemas/Bookmark.schema'
 // import Conversation from '~/models/schemas/Conversations.schema'
@@ -12,6 +15,7 @@ import Product from '~/models/schemas/Product.schema'
 // import Like from '~/models/schemas/Like.schema'
 // import Province from '~/models/schemas/Province.schema'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
+import Role from '~/models/schemas/Role.schema'
 import User from '~/models/schemas/User.schema'
 config()
 
@@ -113,6 +117,18 @@ class DatabaseService {
   }
   get citys(): Collection<City> {
     return this.db.collection(process.env.DB_CITY_COLLECTION as string)
+  }
+  get roles(): Collection<Role> {
+    return this.db.collection(process.env.DB_ROLE_COLLECTION as string)
+  }
+  get producttypes(): Collection<ProductType> {
+    return this.db.collection(process.env.DB_PRODUCT_TYPE_COLLECTION as string)
+  }
+  get deliverytype(): Collection<DeliveryType> {
+    return this.db.collection(process.env.DB_DELIVERY_TYPE_COLLECTION as string)
+  }
+  get paymenttype(): Collection<PaymentType> {
+    return this.db.collection(process.env.DB_PAYMENT_TYPE_COLLECTION as string)
   }
   // get bookmarks(): Collection<Bookmark> {
   //   return this.db.collection(process.env.DB_BOOKMARKS_COLLECTION as string)
