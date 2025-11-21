@@ -163,3 +163,17 @@ export const PAYMENT_TYPE_MESSAGES = {
   DELETE_PAYEMNT_TYPE_SUCCESSFULLY: 'Delete payment type successfully',
   GET_PAYMENT_TYPE_SUCCESSFULLY: 'Get payment type successfully'
 }
+
+export const REVIEWS_MESSAGES = {
+  ADD_REVIEW_SUCCESSFULLY: 'Add review successfully',
+  CONTENT_IS_REQUIRED: 'Content is required',
+  CONTENT_MUST_BE_A_STRING: 'Content must be a string',
+  CONTENT_ALREADY_EXISTS: 'Content already exists',
+  STAR_IS_REQUIRED: 'Star is required',
+  STAR_MUST_BE_A_NUMBER: 'Star must be a number',
+  PRODUCT_ID_IS_REQUIRED: 'Product id is required',
+  UPDATE_REVIEW_SUCCESSFULLY: 'Update review successfully',
+  GET_ALL_REVIEW_SUCCESSFULLY: 'Get all review successfully',
+  DELETE_REVIEW_SUCCESS: 'Delete review successfully',
+  GET_DETAIL_REVIEW_SUCCESSFULLY: 'Get detail review successfully'
+}

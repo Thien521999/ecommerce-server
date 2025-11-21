@@ -15,6 +15,7 @@ import ProductType from '~/models/schemas/ProductType.schema'
 // import Like from '~/models/schemas/Like.schema'
 // import Province from '~/models/schemas/Province.schema'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
+import Review from '~/models/schemas/review.schema'
 import Role from '~/models/schemas/Role.schema'
 import User from '~/models/schemas/User.schema'
 config()
@@ -129,6 +130,9 @@ class DatabaseService {
   }
   get paymenttype(): Collection<PaymentType> {
     return this.db.collection(process.env.DB_PAYMENT_TYPE_COLLECTION as string)
+  }
+  get reviews(): Collection<Review> {
+    return this.db.collection(process.env.DB_REVIEW_COLLECTION as string)
   }
   // get bookmarks(): Collection<Bookmark> {
   //   return this.db.collection(process.env.DB_BOOKMARKS_COLLECTION as string)
