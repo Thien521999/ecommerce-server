@@ -121,7 +121,7 @@ export const unlikeProductController = async (req: Request<ParamsDictionary, any
   })
 }
 
-export const deleteManyProductController = async (req: Request<ParamsDictionary, any, any>, res: Response) => {
+export const deleteManyProductController = async (req: Request, res: Response) => {
   const productIds = req.body.productIds
 
   const result = await productsServices.deleteManyProduct(productIds)

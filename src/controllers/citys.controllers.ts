@@ -7,7 +7,6 @@ import citysService from '~/services/citys.services'
 
 export const createCityController = async (req: Request<ParamsDictionary, any, CityReqBody>, res: Response) => {
   const { user_id } = req.decoded_authorization as TokenPayload
-  console.log({ user_id })
   const result = await citysService.createCity(user_id, req.body)
 
   res.json({
@@ -38,7 +37,7 @@ export const getDetailCityController = async (req: Request, res: Response) => {
   })
 }
 
-export const deleteCityController = async (req: Request<ParamsDictionary, any, CityReqBody>, res: Response) => {
+export const deleteCityController = async (req: Request, res: Response) => {
   const city_id = req.params.id
 
   const result = await citysService.deleteCity(city_id)

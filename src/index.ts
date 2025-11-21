@@ -7,6 +7,8 @@ import citiesRouter from './routes/cities.routes'
 import productsRouter from './routes/products.routes'
 import usersRouter from './routes/users.routes'
 import databaseService from './services/database.services'
+import rolesRouter from './routes/roles.routes'
+import producttypesRouter from './routes/producttypes.routes'
 
 dotenv.config()
 
@@ -39,6 +41,8 @@ app.use('/auth', usersRouter)
 app.use('/users', usersRouter)
 app.use('/products', productsRouter)
 app.use('/cities', citiesRouter)
+app.use('/roles', rolesRouter)
+app.use('/producttypes', producttypesRouter)
 
 app.use('/test', (req, res) => {
   res.send('This is a test endpoint.')

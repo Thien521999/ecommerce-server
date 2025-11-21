@@ -21,7 +21,6 @@ export const cityBodyValidator = validate(
               throw new Error(CITYS_MESSAGES.NAME_ALREADY_EXISTS)
             }
 
-            console.log({ city })
             return true
           }
         }

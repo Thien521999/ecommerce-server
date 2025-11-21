@@ -108,3 +108,58 @@ export const CITYS_MESSAGES = {
   DELETE_CITY_SUCCESS: 'Delete city success',
   GET_ALL_CITY: 'Get all city'
 } as const
+
+export const ROLES_MESSAGES = {
+  NAME_IS_REQUIRED: 'Name is required',
+  NAME_MUST_BE_A_STRING: 'Name must be a string',
+  NAME_ALREADY_EXISTS: 'Name already exists',
+  CREATE_ROLE_SUCCESSFULLY: 'Create role successfully',
+  DELETE_ROLE_SUCCESS: 'Delete role success',
+  GET_ALL_ROLE: 'Get all role',
+  UPDATE_ROLE_SUCCESSFULLY: 'Update role successfully',
+  GET_DETAIL_ROLE_SUCCESSFULLY: 'Get detail role successfully',
+  GET_ALL_ROLE_SUCCESSFULLY: 'Get all role successfully'
+} as const
+
+export const PRODUCTTYPES_MESSAGES = {
+  NAME_IS_REQUIRED: 'Name is required',
+  NAME_MUST_BE_A_STRING: 'Name must be a string',
+  NAME_ALREADY_EXISTS: 'Name already exists',
+  SLUG_IS_REQUIRED: 'Slug is reqquired',
+  SLUG_MUST_BE_A_STRING: 'Slug must be a string',
+  SLUG_INVALID: 'Slug invalid',
+  SLUG_ALREADY_EXISTS: 'Slug already exists',
+  CREATE_PRODUCT_TYPE_SUCCESSFULLY: 'Create product type successfully',
+  CREATE_PRODUCTTYPE_SUCCESSFULLY: 'Create producttype successfully',
+  GET_DETAIL_PRODUCTTYPE_SUCCESSFULLY: 'Get detail producttype successfully',
+  DELETE_PRODUCTTYPE_SUCCESSFULLY: 'Delete product type successfully',
+  GET_ALL_PRODUCTTYPES: 'Get all producttypes',
+  GET_ALL_PRODUCTTYPES_SUCCESSFULLY: 'Get all producttypes successfully'
+}
+
+export const DELIVERY_TYPE_MESSAGES = {
+  PRICE_MUST_BE_A_NUMBER: 'Price must be a number',
+  PRICE_IS_REQUIRED: 'Price is required',
+  NAME_IS_REQUIRED: 'Name is required',
+  NAME_MUST_BE_A_STRING: 'Name must be a string',
+  NAME_ALREADY_EXISTS: 'Name already exists',
+  CREATE_DELIVERY_SUCCESSFULLY: 'Create delivery successfully',
+  UPDATE_DELIVERY_TYPE_SUCCESSFULLY: 'Update delivery type successfully',
+  GET_DELIVERY_TYPE_SUCCESSFULLY: 'Get delivery type successfully',
+  DELIVERY_TYPE_SUCCESSFULLY: 'Delivery type successfully',
+  GET_ALL_DELIVERY_TYPE_SUCCESSFULLY: 'Get all delivery type successfully',
+  DELETE_DELIVERY_TYPE_SUCCESSFULLY: 'Delete delivery type successfully'
+}
+
+export const PAYMENT_TYPE_MESSAGES = {
+  NAME_IS_REQUIRED: 'Name is required',
+  NAME_MUST_BE_A_STRING: 'Name must be a string',
+  NAME_ALREADY_EXISTS: 'Name already exists',
+  DELETE_PAYMENT_TYPE_SUCCESSFULLY: 'Delete payment type successfully',
+  GET_ALL_PAYMENT_TYPE_SUCCESSFULLY: 'Get all payment type successfully',
+  CREATE_PAYMENT_TYPE_SUCCESSFULLY: 'Create payment type successfully',
+  UPDATE_DELIVERY_TYPE_SUCCESSFULLY: 'Update payment type successfully',
+  GET_DELIVERY_TYPE_SUCCESSFULLY: 'Get all payment type successfully',
+  DELETE_PAYEMNT_TYPE_SUCCESSFULLY: 'Delete payment type successfully',
+  GET_PAYMENT_TYPE_SUCCESSFULLY: 'Get payment type successfully'
+}
