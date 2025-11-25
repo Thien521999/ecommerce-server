@@ -12,6 +12,12 @@ import rolesRouter from './routes/roles.routes'
 import usersRouter from './routes/users.routes'
 import databaseService from './services/database.services'
 import ordersRouter from './routes/orders.routes'
+import YAML from 'yaml'
+import swaggerUi from 'swagger-ui-express'
+import fs from 'fs'
+import path from 'path'
+const file = fs.readFileSync(path.join('./api-swagger.yaml'), 'utf8')
+const swaggerDocument = YAML.parse(file)
 
 dotenv.config()
 
@@ -33,9 +39,10 @@ const httpServer = createServer(app)
 const port = process.env.PORT || 4000
 app.use(cors(corsOptions))
 app.use(express.json())
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 // middlewares
 app.use('/auth', usersRouter)
-app.use('/users', usersRouter)
+// app.use('/users', usersRouter)
 app.use('/products', productsRouter)
 app.use('/cities', citiesRouter)
 app.use('/roles', rolesRouter)

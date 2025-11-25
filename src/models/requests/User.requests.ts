@@ -56,10 +56,9 @@ export interface FollowReqBody {
 
 export interface UpdatedMeReqBody {
   name?: string
-  date_of_birth?: string
-  bio?: string
-  location?: string
+  email?: string
+  role_id?: string
+  phoneNumber?: string
+  address?: string
   avatar?: string
-  cover_photo?: string
-  isFirstLogin?: boolean
 }

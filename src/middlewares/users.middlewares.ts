@@ -176,11 +176,11 @@ export const userIdSchema: ParamSchema = {
         })
       }
 
-      const followed_user = await databaseService.users.findOne({
+      const user = await databaseService.users.findOne({
         _id: new ObjectId(value)
       })
 
-      if (followed_user === null) {
+      if (user === null) {
         throw new ErrorWithStatus({
           message: USERS_MESSAGES.USER_NOT_FOUND,
           status: HTTP_STATUS.NOT_FOUND
@@ -256,7 +256,7 @@ export const registerValidator = validate(
           options: async (value) => {
             const isExistEmail = await usersService.checkEmailExist(value)
             if (isExistEmail) {
-              throw new Error(USERS_MESSAGES.USER_NOT_FOUND)
+              throw new Error(USERS_MESSAGES.EMAIL_ALREADY_EXISTS)
             }
             return true
           }
@@ -543,6 +543,15 @@ export const unFollowValidator = validate(
   checkSchema(
     {
       user_id: userIdSchema
+    },
+    ['params']
+  )
+)
+
+export const verifiedIdValidator = validate(
+  checkSchema(
+    {
+      id: userIdSchema
     },
     ['params']
   )

@@ -24,6 +24,8 @@
     "@types/lodash": "^4.17.20",
     "@types/minimist": "^1.2.5",
     "@types/node": "^24.10.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
@@ -51,6 +53,9 @@
     "minimist": "^1.2.8",
     "node-cron": "^4.2.1",
     "sharp": "^0.34.5",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "yaml": "^2.8.1"
   }
 }

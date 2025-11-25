@@ -444,15 +444,19 @@ class UsersService {
   async updateMe(user_id: string, payload: UpdatedMeReqBody) {
     // updateOne: only update, not return document
     // findOneAndUpdate: update and return document , default tra ve document cũ
-    const _payload = payload.date_of_birth
-      ? { ...payload, date_of_birth: new Date(payload.date_of_birth) }
-      : { ...payload }
+    // const _payload = payload.date_of_birth
+    //   ? { ...payload, date_of_birth: new Date(payload.date_of_birth) }
+    //   : { ...payload }
 
     const user = await databaseService.users.findOneAndUpdate(
       { _id: new ObjectId(user_id) },
       {
+        // $set: {
+        //   ...(_payload as UpdatedMeReqBody & { date_of_birth?: Date })
+        // },
         $set: {
-          ...(_payload as UpdatedMeReqBody & { date_of_birth?: Date })
+          ...payload,
+          role_id: new ObjectId(payload.role_id)
         },
         $currentDate: {
           updated_at: true
