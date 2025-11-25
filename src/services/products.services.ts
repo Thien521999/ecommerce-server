@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectId } from 'mongodb'
+import { PRODUCTS_MESSAGES } from '~/constants/messages'
 import { CreateProductReqBody, UpdateProductReqBody } from '~/models/requests/Product.requests'
 import Product from '~/models/schemas/Product.schema'
 import databaseService from './database.services'
-import { PRODUCTS_MESSAGES } from '~/constants/messages'
 import usersService from './users.services'
 
 class ProductsService {
@@ -280,13 +280,13 @@ class ProductsService {
   }
 
   async getAllProducts(user_id: string, params: any) {
-    const limit = params?.limit ? +params.limit : 10
-    const page = params?.page ? +params.page : 1
+    const limit = Math.min(Math.max(+params?.limit || 10, 1), 100) // Max 100 items
+    const page = Math.max(+params?.page || 1, 1) // Min page = 1
     const search = params?.search ?? ''
     const productType = params?.productType ?? ''
     const minPrice = +params?.minPrice || 0
-    const maxPrice = +params?.maxPrice || Number.MAX_SAFE_INTEGER
-    const order = params?.order || 'desc'
+    const maxPrice = +params?.maxPrice || Number.MAX_SAFE_INTEGER // Number.MAX_SAFE_INTEGER là số nguyên lớn nhất JavaScript có thể biểu diễn chính xác
+    const order = params?.order || 'created_at desc'
     const productLocation = params.productLocation || ''
     const minStar = params?.minStar ? +params.minStar : 0
     const maxStar = params?.maxStar ? +params.maxStar : 5
@@ -359,8 +359,10 @@ class ProductsService {
     }
 
     // 6. Filter status
+    // FE có thể truyền: ?status=0&status=1 (array) hoặc ?status=0,1 (comma-separated)
     if (statusFilter !== undefined) {
-      const statuses = statusFilter?.split('|')?.map((s: number) => Number(s))
+      // Trường hợp: ?status=0,1 hoặc ?status=1
+      const statuses = statusFilter.split(',').map(Number)
 
       filterStages.push({
         $match: {
@@ -370,16 +372,23 @@ class ProductsService {
     }
 
     // 7. Sort
-    // const [sortField, sortDir] = order.split(' ')
-    // const sortOrder = sortDir.toLowerCase() === 'asc' ? 1 : -1
+    if (order) {
+      const [sortField, sortDir] = order?.split(' ')
+      const sortOrder = sortDir?.toLowerCase() === 'asc' ? 1 : -1
+      // asc  = tăng dần(1 trong MongoDb) =>  sản phẩm cũ nhất lên đầu
+      // desc = giảm dần (-1 trong MongoDb) => sản phẩm mới nhất lên đầu
 
-    // filterStages.push({
-    //   $sort: {
-    //     [sortField]: sortOrder
-    //   }
-    // })
+      filterStages.push({
+        $sort: {
+          [sortField]: sortOrder
+        }
+      })
+    }
 
     // Build lookup and pagination stages
+    // Gợi ý:(cân nhắc hiệu suất)
+    // - Chỉ lấy fields cần thiết với $project
+    // - Cân nhắc có cần likedBy array không? (có thể chỉ cần totalLikes)
     const lookupAndPaginationStages: any[] = [
       {
         $lookup: {
