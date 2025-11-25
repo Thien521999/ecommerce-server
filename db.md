@@ -58,8 +58,9 @@ interface Product {
   countInStock: number; // Số lượng tồn kho
   description: string;
   discount: number;
-  discountStartDate: Date;
-  discountEndDate: Date;
+  discountStartDate: Date
+  discountEndDate: Date
+  rating: number
   sold: number; // Số lượng đã bán
   type_id: ObjectId; // Loại sản phẩm
   location_id: ObjectId;
@@ -136,7 +137,7 @@ interface Order {
     phone: number
   };
   paymentMethod_id: ObjectId; // Phương thức thanh toán
-  deliveryMethod_id: any;     // Phương thức giao hàng
+  deliveryMethod_id: ObjectId;     // Phương thức giao hàng
   itemsPrice: number;   // Tổng tiền sản phẩm
   shippingPrice: number // Phí vận chuyển
   totalPrice: number // Tổng tiền

@@ -36,3 +36,16 @@ export const verifyAccessToken = async (access_token: string, req?: Request) => 
     })
   }
 }
+
+export const flattenPermissions = (obj: any, result: string[] = []) => {
+  for (const key in obj) {
+    const value = obj[key]
+
+    if (typeof value === 'string') {
+      result.push(value)
+    } else {
+      flattenPermissions(value, result)
+    }
+  }
+  return result
+}

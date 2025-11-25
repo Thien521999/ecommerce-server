@@ -1,0 +1,75 @@
+export const CONFIG_PERMISSIONS = {
+  ADMIN: 'ADMIN.GRANTED', // Toàn quyền quản trị
+  BASIC: 'BASIC.PUBLIC', // Quyền cơ bản cho user không đăng nhập hoặc user thường (xem trang public).
+  DASHBOARD: 'DASHBOARD', // Quyền được vào dashboard (thường dành cho nội bộ/staff)
+  MANAGE_PRODUCT: {
+    PRODUCT: {
+      CREATE: 'MANAGE_PRODUCT.PRODUCT.CREATE', // Cho phép tạo sản phẩm
+      VIEW: 'MANAGE_PRODUCT.PRODUCT.VIEW',
+      UPDATE: 'MANAGE_PRODUCT.PRODUCT.UPDATE',
+      DELETE: 'MANAGE_PRODUCT.PRODUCT.DELETE' // Cho phép xóa tài khoản người dùng
+    },
+    PRODUCT_TYPE: {
+      CREATE: 'MANAGE_PRODUCT.PRODUCT_TYPE.CREATE',
+      UPDATE: 'MANAGE_PRODUCT.PRODUCT_TYPE.UPDATE',
+      DELETE: 'MANAGE_PRODUCT.PRODUCT_TYPE.DELETE'
+    }
+  },
+  SYSTEM: {
+    // Nhóm quyền quản trị hệ thống (back-office)
+    USER: {
+      VIEW: 'SYSTEM.USER.VIEW',
+      CREATE: 'SYSTEM.USER.CREATE',
+      UPDATE: 'SYSTEM.USER.UPDATE',
+      DELETE: 'SYSTEM.USER.DELETE' //
+    },
+    // Quyền quản lý vai trò (role) & phân quyền
+    ROLE: {
+      VIEW: 'SYSTEM.ROLE.VIEW',
+      CREATE: 'SYSTEM.ROLE.CREATE',
+      UPDATE: 'SYSTEM.ROLE.UPDATE',
+      DELETE: 'SYSTEM.ROLE.DELETE'
+    }
+  },
+  MANAGE_ORDER: {
+    REVIEW: {
+      UPDATE: 'MANAGE_ORDER.REVIEW.UPDATE',
+      DELETE: 'MANAGE_ORDER.REVIEW.DELETE'
+    },
+    ORDER: {
+      VIEW: 'MANAGE_ORDER.ORDER.VIEW',
+      CREATE: 'MANAGE_ORDER.ORDER.CREATE',
+      UPDATE: 'MANAGE_ORDER.ORDER.UPDATE',
+      DELETE: 'MANAGE_ORDER.ORDER.DELETE'
+    }
+  },
+  SETTING: {
+    PAYMENT_TYPE: {
+      CREATE: 'SETTING.PAYMENT_TYPE.CREATE',
+      UPDATE: 'SETTING.PAYMENT_TYPE.UPDATE',
+      DELETE: 'SETTING.PAYMENT_TYPE.DELETE'
+    },
+    DELIVERY_TYPE: {
+      CREATE: 'SETTING.DELIVERY_TYPE.CREATE',
+      UPDATE: 'SETTING.DELIVERY_TYPE.UPDATE',
+      DELETE: 'SETTING.DELIVERY_TYPE.DELETE'
+    },
+    CITY: {
+      CREATE: 'CITY.CREATE',
+      UPDATE: 'CITY.UPDATE',
+      DELETE: 'CITY.DELETE'
+    }
+  }
+}
+
+export const CONFIG_USER_TYPE = {
+  FACEBOOK: 1,
+  GOOGLE: 2,
+  OTHER: 3
+}
+
+export const PAYMENT_TYPES = {
+  PAYMENT_LATER: 'PAYMENT_LATER',
+  VN_PAYMENT: 'VN_PAYMENT',
+  PAYPAL: 'PAYPAL'
+}

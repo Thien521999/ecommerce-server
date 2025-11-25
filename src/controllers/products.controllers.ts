@@ -1,11 +1,9 @@
 import { Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
-import { setDefaultResultOrder } from 'node:dns'
 import { PRODUCTS_MESSAGES } from '~/constants/messages'
 import { CreateProductReqBody, UpdateProductReqBody } from '~/models/requests/Product.requests'
 import { TokenPayload } from '~/models/requests/User.requests'
 import productsServices from '~/services/products.services'
-import usersService from '~/services/users.services'
 
 export const createProductController = async (
   req: Request<ParamsDictionary, any, CreateProductReqBody>,
@@ -46,23 +44,12 @@ export const getDetailProductController = async (req: Request<ParamsDictionary, 
 export const getAllProductsController = async (req: Request<ParamsDictionary, any, any>, res: Response) => {
   const { user_id } = req.decoded_authorization as TokenPayload
   const params = req.query
-  // const limit = Number(params.limit)
-  // const page = Number(params.page)
-  // const search = String(params.search) || ''
-  // const order = params.order || 'desc'
-  // const productType = params.productType || ''
-  // const productLocation = params.productLocation || ''
-  // const minStar = params.minStar ? +params.minStar : 0
-  // const maxStar = params.maxStar ? +params.maxStar : 5
-  // const minPrice = params.minPrice ? +params.minPrice : 0
-  // const maxPrice = params.maxPrice ? +params.maxPrice : Number.MAX_SAFE_INTEGER
-  // const statusFilter = params?.status
 
-  // const result = await productsServices.getAllProducts(user_id, params)
+  const result = await productsServices.getAllProducts(user_id, params)
 
   res.json({
-    message: PRODUCTS_MESSAGES.GET_DETAIL_PRODUCT_SUCCESSFULLY,
-    data: 'result'
+    message: PRODUCTS_MESSAGES.GET_ALL_PRODUCT_SUCCESSFULLY,
+    data: result
   })
 }
 

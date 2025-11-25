@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ObjectId } from 'mongodb'
 import { CreateProductReqBody, UpdateProductReqBody } from '~/models/requests/Product.requests'
 import Product from '~/models/schemas/Product.schema'
@@ -18,7 +19,9 @@ class ProductsService {
         name: body.name,
         image: body.image,
         countInStock: body.countInStock,
-        price: body.price
+        price: body.price,
+        discountStartDate: body.discountStartDate,
+        discountEndDate: body.discountEndDate
       })
     )
 
@@ -276,145 +279,150 @@ class ProductsService {
     }
   }
 
-  // async getAllProducts(user_id: string, params: any) {
-  //   const limit = Number(params.limit)
-  //   const page = Number(params.page)
-  //   const search = String(params.search) || ''
-  //   const order = params.order || 'desc'
-  //   const productType = params.productType || ''
-  //   const productLocation = params.productLocation || ''
-  //   const minStar = params.minStar ? +params.minStar : 0
-  //   const maxStar = params.maxStar ? +params.maxStar : 5
-  //   const minPrice = params.minPrice ? +params.minPrice : 0
-  //   const maxPrice = params.maxPrice ? +params.maxPrice : Number.MAX_SAFE_INTEGER
-  //   const statusFilter = params?.status
+  async getAllProducts(user_id: string, params: any) {
+    const limit = params?.limit ? +params.limit : 10
+    const page = params?.page ? +params.page : 1
+    const search = params?.search ?? ''
+    const productType = params?.productType ?? ''
+    const minPrice = +params?.minPrice || 0
+    const maxPrice = +params?.maxPrice || Number.MAX_SAFE_INTEGER
+    const order = params?.order || 'desc'
+    const productLocation = params.productLocation || ''
+    const minStar = params?.minStar ? +params.minStar : 0
+    const maxStar = params?.maxStar ? +params.maxStar : 5
+    const statusFilter = params?.status
 
-  //   // ------------------------------
-  //   // 1. Build query
-  //   // ------------------------------
-  //   const query: Record<string, any> = {}
+    // Build filter stages (reusable for both query and count)
+    const filterStages: any[] = []
 
-  //   // TYPE Filter
-  //   if (productType) {
-  //     const typeIds = productType.split('|').map((id: string) => new ObjectId(id))
-  //     query.type = typeIds.length > 1 ? { $in: typeIds } : typeIds[0]
-  //   }
+    // 1. Search by name
+    if (search.trim() !== '') {
+      filterStages.push(
+        {
+          $match: {
+            $text: {
+              $search: search
+            }
+          }
+        },
+        {
+          $addFields: {
+            score: { $meta: 'textScore' } // search "Iphone 11", vẫn trả về "Iphone 17 pro max" nhưng "Iphone 11" sẽ có score cao hơn và được sắp xếp lên đầu
+          }
+        },
+        {
+          $sort: { score: -1 } // Sort by relevance score
+        }
+      )
+    }
 
-  //   // LOCATION Filter
-  //   if (productLocation) {
-  //     const locIds = productLocation.split('|').map((id: string) => new ObjectId(id))
-  //     query.location = locIds.length > 1 ? { $in: locIds } : locIds[0]
-  //   }
+    // 2. Filter productType
+    if (productType) {
+      const typeIds = productType?.split(',')?.map((id: string) => new ObjectId(id))
+      filterStages.push({
+        $match: {
+          type: {
+            $in: typeIds
+          }
+        }
+      })
+    }
 
-  //   // STATUS Filter
-  //   if (statusFilter !== undefined) {
-  //     const statusValues = statusFilter.split('|').map((s: string) => Number(s))
-  //     query.status = statusValues.length > 1 ? { $in: statusValues } : statusValues[0]
-  //   }
+    // 3. Filter productLocation
+    if (productLocation) {
+      const locationIds = productLocation?.split(',')?.map((id: string) => new ObjectId(id))
+      filterStages.push({
+        $match: {
+          location: {
+            $in: locationIds
+          }
+        }
+      })
+    }
 
-  //   // SEARCH
-  //   if (search) {
-  //     query.name = { $regex: search, $options: 'i' }
-  //   }
+    // 4. Filter price range
+    if (minPrice >= 0 && maxPrice >= minPrice) {
+      filterStages.push({
+        $match: {
+          price: { $gte: minPrice, $lte: maxPrice }
+        }
+      })
+    }
 
-  //   // PRICE RANGE
-  //   query.price = { $gte: minPrice, $lte: maxPrice }
+    // 5. Filter rating (star)
+    if (minStar >= 0 && maxStar >= minStar) {
+      filterStages.push({
+        $match: {
+          rating: { $gte: minStar, $lte: maxStar }
+        }
+      })
+    }
 
-  //   // ------------------------------
-  //   // 2. Total count
-  //   // ------------------------------
-  //   const totalCount = await databaseService.products.countDocuments(query)
-  //   const totalPage = Math.ceil(totalCount / limit)
-  //   const skip = (page - 1) * limit
+    // 6. Filter status
+    if (statusFilter !== undefined) {
+      const statuses = statusFilter?.split('|')?.map((s: number) => Number(s))
 
-  //   // ------------------------------
-  //   // 3. Parse sort options
-  //   // ------------------------------
-  //   const sortOptions = {}
-  //   if (order) {
-  //     order.split(',').forEach((item: any) => {
-  //       const [field, direction] = item.trim().split(' ')
-  //       sortOptions[field] = direction.toLowerCase() === 'asc' ? 1 : -1
-  //     })
-  //   }
+      filterStages.push({
+        $match: {
+          status: { $in: statuses }
+        }
+      })
+    }
 
-  //   // ------------------------------
-  //   // 4. Selected output fields
-  //   // ------------------------------
-  //   const project = {
-  //     image: 1,
-  //     name: 1,
-  //     createdAt: 1,
-  //     price: 1,
-  //     countInStock: 1,
-  //     totalLikes: 1,
-  //     averageRating: 1,
-  //     status: 1,
-  //     type: { id: '$typeInfo._id', name: '$typeInfo.name' },
-  //     location: { id: '$locationInfo._id', name: '$locationInfo.name' }
-  //   }
+    // 7. Sort
+    // const [sortField, sortDir] = order.split(' ')
+    // const sortOrder = sortDir.toLowerCase() === 'asc' ? 1 : -1
 
-  //   // ------------------------------
-  //   // 5. Build pipeline
-  //   // ------------------------------
-  //   const pipeline = [
-  //     { $match: query },
-  //     { $sort: sortOptions },
-  //     ...(page !== -1 && limit !== -1 ? [{ $skip: skip }, { $limit: limit }] : []),
-  //     {
-  //       $lookup: {
-  //         from: 'reviews',
-  //         localField: '_id',
-  //         foreignField: 'product',
-  //         as: 'reviews'
-  //       }
-  //     },
-  //     {
-  //       $addFields: {
-  //         averageRating: {
-  //           $ifNull: [{ $avg: '$reviews.star' }, 0]
-  //         }
-  //       }
-  //     },
-  //     {
-  //       // Filter theo star (minStar - maxStar)
-  //       $match: {
-  //         averageRating: { $gte: minStar, $lte: maxStar }
-  //       }
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'producttypes',
-  //         localField: 'type',
-  //         foreignField: '_id',
-  //         as: 'typeInfo'
-  //       }
-  //     },
-  //     { $unwind: '$typeInfo' },
-  //     {
-  //       $lookup: {
-  //         from: 'cities',
-  //         localField: 'location',
-  //         foreignField: '_id',
-  //         as: 'locationInfo'
-  //       }
-  //     },
-  //     { $unwind: '$locationInfo' },
-  //     { $project: project }
-  //   ]
+    // filterStages.push({
+    //   $sort: {
+    //     [sortField]: sortOrder
+    //   }
+    // })
 
-  //   const items = await productsCol.aggregate(pipeline).toArray()
+    // Build lookup and pagination stages
+    const lookupAndPaginationStages: any[] = [
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'likedBy',
+          foreignField: '_id',
+          as: 'likedBy'
+        }
+      },
+      { $skip: (page - 1) * limit },
+      { $limit: limit }
+    ]
 
-  //   return {
-  //     status: 200,
-  //     message: 'Success',
-  //     data: {
-  //       products: items,
-  //       totalPage,
-  //       totalCount
-  //     }
-  //   }
-  // }
+    // Combine stages for the main query
+    const aggregationPipeline = [...filterStages, ...lookupAndPaginationStages]
+
+    // Execute main query
+    const products = await databaseService.products.aggregate(aggregationPipeline).toArray()
+
+    // Count total documents with the same filters
+    const countPipeline = [...filterStages, { $count: 'total' }]
+    const countResult = await databaseService.products.aggregate(countPipeline).toArray()
+    const totalCount = countResult.length > 0 ? countResult[0].total : 0
+    const totalPage = Math.ceil(totalCount / limit)
+
+    return {
+      status: 200,
+      message: 'Success',
+      data: {
+        products,
+        totalPage,
+        totalCount
+      }
+    }
+  }
 }
 
 const productsService = new ProductsService()

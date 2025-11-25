@@ -50,7 +50,12 @@ const imageSchema: ParamSchema = {
 }
 
 const discountStartDateSchema: ParamSchema = {
-  optional: true,
+  notEmpty: {
+    errorMessage: 'DiscountStartDate is required'
+  },
+  isString: {
+    errorMessage: 'DiscountStartDate must be a string'
+  },
   isISO8601: {
     errorMessage: PRODUCTS_MESSAGES.DISCOUNT_START_DATE_INVALID
   },
@@ -66,7 +71,12 @@ const discountStartDateSchema: ParamSchema = {
 }
 
 const discountEndDateSchema: ParamSchema = {
-  optional: true,
+  notEmpty: {
+    errorMessage: 'DiscountEndDate is required'
+  },
+  isString: {
+    errorMessage: 'DiscountEndDate must be a string'
+  },
   isISO8601: {
     errorMessage: PRODUCTS_MESSAGES.DISCOUNT_END_DATE_INVALID
   },
@@ -109,6 +119,20 @@ export const createProductValidator = validate(
       //       max: 100
       //     },
       //     errorMessage: PRODUCTS_MESSAGES.SLUG_LENGTH_MUST_BE_FROM_1_TO_100
+      //   },
+      //   custom: {
+      //     options: async (value) => {
+      //       const slug = await databaseService.products.findOne({ slug: value })
+
+      //       if (slug) {
+      //         throw new ErrorWithStatus({
+      //           message: PRODUCTS_MESSAGES.SLUG_EXISTED,
+      //           status: HTTP_STATUS.NOT_FOUND
+      //         })
+      //       }
+
+      //       return true
+      //     }
       //   }
       // },
       image: imageSchema,

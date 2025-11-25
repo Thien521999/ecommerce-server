@@ -5,7 +5,7 @@ import { capitalize } from 'lodash'
 import { ObjectId } from 'mongodb'
 import { userVerifyStatus } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
-import { USERS_MESSAGES } from '~/constants/messages'
+import { ROLES_MESSAGES, USERS_MESSAGES } from '~/constants/messages'
 import { ErrorWithStatus } from '~/models/Error'
 import { TokenPayload } from '~/models/requests/User.requests'
 import databaseService from '~/services/database.services'
@@ -258,6 +258,26 @@ export const registerValidator = validate(
             if (isExistEmail) {
               throw new Error(USERS_MESSAGES.USER_NOT_FOUND)
             }
+            return true
+          }
+        }
+      },
+      role_id: {
+        notEmpty: {
+          errorMessage: 'Role is required'
+        },
+        custom: {
+          options: async (value, { req }) => {
+            const role = await databaseService.roles.findOne({
+              _id: new ObjectId(value)
+            })
+
+            if (role == null) {
+              throw new Error(ROLES_MESSAGES.ROLE_ID_IS_INCORRECT)
+            }
+
+            req.role = role
+
             return true
           }
         }

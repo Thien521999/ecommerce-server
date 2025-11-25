@@ -69,6 +69,7 @@ export const PRODUCTS_MESSAGES = {
   NAME_LENGTH_MUST_BE_FROM_1_TO_100: 'Name length must be from 1 to 100',
   SLUG_IS_REQUIRED: 'Slug is required',
   SLUG_MUST_BE_A_STRING: 'Slug must be a string',
+  SLUG_EXISTED: 'Slug existed',
   SLUG_LENGTH_MUST_BE_FROM_1_TO_100: 'Name length must be from 1 to 100',
   IMAGE_URL_MUST_BE_STRING: 'Cover photo must be string',
   IMAGE_URL_LENGTH: 'Avatar must be from 1 to 400',
@@ -97,7 +98,8 @@ export const PRODUCTS_MESSAGES = {
   THE_USER_IS_NOT_EXISTED: 'The user is not existed',
   THE_PRODUCT_IS_NOT_LIKED_YET: 'The product is not liked yet',
   UNLIKED_PRODUCT_SUCCESSFULLY: 'Unliked product successfully',
-  DELETE_PRODUCTS_SUCCESS: 'Delete products success'
+  DELETE_PRODUCTS_SUCCESS: 'Delete products success',
+  GET_ALL_PRODUCT_SUCCESSFULLY: 'Get all product successfully'
 } as const
 
 export const CITYS_MESSAGES = {
@@ -118,7 +120,8 @@ export const ROLES_MESSAGES = {
   GET_ALL_ROLE: 'Get all role',
   UPDATE_ROLE_SUCCESSFULLY: 'Update role successfully',
   GET_DETAIL_ROLE_SUCCESSFULLY: 'Get detail role successfully',
-  GET_ALL_ROLE_SUCCESSFULLY: 'Get all role successfully'
+  GET_ALL_ROLE_SUCCESSFULLY: 'Get all role successfully',
+  ROLE_ID_IS_INCORRECT: 'Role id is incorrect'
 } as const
 
 export const PRODUCTTYPES_MESSAGES = {
@@ -130,12 +133,12 @@ export const PRODUCTTYPES_MESSAGES = {
   SLUG_INVALID: 'Slug invalid',
   SLUG_ALREADY_EXISTS: 'Slug already exists',
   CREATE_PRODUCT_TYPE_SUCCESSFULLY: 'Create product type successfully',
-  CREATE_PRODUCTTYPE_SUCCESSFULLY: 'Create producttype successfully',
+  UPDATE_PRODUCTTYPE_SUCCESSFULLY: 'Update product type successfully',
   GET_DETAIL_PRODUCTTYPE_SUCCESSFULLY: 'Get detail producttype successfully',
   DELETE_PRODUCTTYPE_SUCCESSFULLY: 'Delete product type successfully',
   GET_ALL_PRODUCTTYPES: 'Get all producttypes',
   GET_ALL_PRODUCTTYPES_SUCCESSFULLY: 'Get all producttypes successfully'
-}
+} as const
 
 export const DELIVERY_TYPE_MESSAGES = {
   PRICE_MUST_BE_A_NUMBER: 'Price must be a number',
@@ -149,7 +152,7 @@ export const DELIVERY_TYPE_MESSAGES = {
   DELIVERY_TYPE_SUCCESSFULLY: 'Delivery type successfully',
   GET_ALL_DELIVERY_TYPE_SUCCESSFULLY: 'Get all delivery type successfully',
   DELETE_DELIVERY_TYPE_SUCCESSFULLY: 'Delete delivery type successfully'
-}
+} as const
 
 export const PAYMENT_TYPE_MESSAGES = {
   NAME_IS_REQUIRED: 'Name is required',
@@ -161,8 +164,10 @@ export const PAYMENT_TYPE_MESSAGES = {
   UPDATE_DELIVERY_TYPE_SUCCESSFULLY: 'Update payment type successfully',
   GET_DELIVERY_TYPE_SUCCESSFULLY: 'Get all payment type successfully',
   DELETE_PAYEMNT_TYPE_SUCCESSFULLY: 'Delete payment type successfully',
-  GET_PAYMENT_TYPE_SUCCESSFULLY: 'Get payment type successfully'
-}
+  GET_PAYMENT_TYPE_SUCCESSFULLY: 'Get payment type successfully',
+  INVALID_PAYMENT_TYPE: 'Invalid payment type',
+  TYPE_ALREADY_EXISTS: 'Type already exists'
+} as const
 
 export const REVIEWS_MESSAGES = {
   ADD_REVIEW_SUCCESSFULLY: 'Add review successfully',
@@ -176,4 +181,31 @@ export const REVIEWS_MESSAGES = {
   GET_ALL_REVIEW_SUCCESSFULLY: 'Get all review successfully',
   DELETE_REVIEW_SUCCESS: 'Delete review successfully',
   GET_DETAIL_REVIEW_SUCCESSFULLY: 'Get detail review successfully'
-}
+} as const
+
+export const ORDERS_MESSAGES = {
+  FULL_NAME_IS_REQUIRED: 'Full name is required',
+  ADDRESS_IS_REQUIRED: 'Address is required',
+  ADDRESS_MUST_BE_A_STRING: 'Address must be a string',
+  CITY_IS_REQUIRED: 'City is required',
+  CITY_MUST_BE_A_STRING: 'City must be a string',
+  CREATE_ORDER_SUCCESSFULLY: 'Create order successfully',
+  PHONE_IS_REQUIRED: 'Phone is required',
+  PHONE_MUST_BE_A_NUMBER: 'Phone must be a number',
+  PAYMENT_METHOD_ID_IS_REQUIRED: 'Payment method id is required',
+  PAYMENT_METHOD_ID_MUST_BE_A_STRING: 'Payment method must be a string',
+  DELIVERY_METHOD_ID_IS_REQUIRED: 'Delivery method id is required',
+  DELIVERY_METHOD_ID_MUST_BE_A_STRING: 'Delivery method id must be a string',
+  ITEMS_PRICE_IS_REQUIRED: 'Items price is required',
+  ITEMS_PRICE_MUST_BE_A_NUMBER: 'Items price must be a string',
+  SHIPPING_PRICE_IS_REQUIRED: 'Shipping price is required',
+  SHIPPING_PRICE_MUST_BE_A_NUMBER: 'Shipping price must be a number',
+  TOTAL_PRICE_IS_REQUIRED: 'Total price is required',
+  TOTAL_PRICE_MUST_BE_A_NUMBER: 'Total price must be a number',
+  IS_PAID_IS_REQUIRED: 'Is paid is required',
+  IS_PAID_MUST_BE_0_OR_1: 'Is paid must be 0 or 1',
+  IS_DELIVERED_IS_REQUIRED: 'Is delivered is required',
+  IS_DELIVERED_MUST_BE_0_OR_1: 'Is delivered must be 0 or 1',
+  STATUS_IS_REQUIRED: 'Status is required',
+  STATUS_MUST_BE_0_OR_1: 'Status must be 0 or 1'
+} as const
