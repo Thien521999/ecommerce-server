@@ -4,25 +4,22 @@ import express from 'express'
 import { createServer } from 'http'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
 import citiesRouter from './routes/cities.routes'
+import paymenttypeRouter from './routes/paymenttype.routes'
 import productsRouter from './routes/products.routes'
+import producttypesRouter from './routes/producttypes.routes'
+import reviewsRouter from './routes/reviews.routes'
+import rolesRouter from './routes/roles.routes'
 import usersRouter from './routes/users.routes'
 import databaseService from './services/database.services'
-import rolesRouter from './routes/roles.routes'
-import producttypesRouter from './routes/producttypes.routes'
+import ordersRouter from './routes/orders.routes'
 
 dotenv.config()
 
-databaseService.connect()
-// .then(() => {
-//   databaseService.indexUsers()
-//   databaseService.indexRefreshTokens()
-//   databaseService.indexFollowers()
-//   databaseService.indexProvince()
-//   databaseService.indexNotifications()
-//   databaseService.indexLikes()
-//   databaseService.indexBookmark()
-//   databaseService.indexHashtags()
-// })
+databaseService.connect().then(() => {
+  databaseService.indexUsers()
+  databaseService.indexRefreshTokens()
+  databaseService.indexProducts()
+})
 
 const corsOptions = {
   origin: '*', // Replace with the allowed origin
@@ -43,6 +40,9 @@ app.use('/products', productsRouter)
 app.use('/cities', citiesRouter)
 app.use('/roles', rolesRouter)
 app.use('/producttypes', producttypesRouter)
+app.use('/paymenttype', paymenttypeRouter)
+app.use('/reviews', reviewsRouter)
+app.use('/orders', ordersRouter)
 
 app.use('/test', (req, res) => {
   res.send('This is a test endpoint.')

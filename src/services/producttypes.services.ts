@@ -70,7 +70,7 @@ class ProductTypesService {
     const total_page = Math.ceil(total / limit)
     const skip = (page - 1) * limit
 
-    const producttypes = await databaseService.citys.find(query).skip(skip).limit(limit).toArray()
+    const producttypes = await databaseService.producttypes.find(query).skip(skip).limit(limit).toArray()
 
     return {
       message: PRODUCTTYPES_MESSAGES.GET_ALL_PRODUCTTYPES,

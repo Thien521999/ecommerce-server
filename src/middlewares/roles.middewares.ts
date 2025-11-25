@@ -1,6 +1,8 @@
 import { checkSchema } from 'express-validator'
+import { CONFIG_PERMISSIONS } from '~/constants/config'
 import { ROLES_MESSAGES } from '~/constants/messages'
 import databaseService from '~/services/database.services'
+import { flattenPermissions } from '~/utils/common'
 import { validate } from '~/utils/validation'
 
 export const roleBodyValidator = validate(
@@ -26,11 +28,24 @@ export const roleBodyValidator = validate(
         }
       },
       permissions: {
-        notEmpty: {
-          errorMessage: ROLES_MESSAGES.NAME_IS_REQUIRED
+        optional: false,
+        isArray: {
+          errorMessage: 'permissions must be an array'
         },
-        isString: {
-          errorMessage: ROLES_MESSAGES.NAME_MUST_BE_A_STRING
+        custom: {
+          options: (value: string[]) => {
+            if (!Array.isArray(value)) return false
+
+            const ALL_PERMISSIONS = flattenPermissions(CONFIG_PERMISSIONS)
+
+            for (const p of value) {
+              if (!ALL_PERMISSIONS.includes(p)) {
+                throw new Error(`Invalid permission: ${p}`)
+              }
+            }
+
+            return true
+          }
         }
       }
     },

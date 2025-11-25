@@ -27,7 +27,7 @@ export const updateProductTypeController = async (
   const result = await productTypesService.updateProducttype(producttype_id, req.body)
 
   res.json({
-    message: PRODUCTTYPES_MESSAGES.CREATE_PRODUCTTYPE_SUCCESSFULLY,
+    message: PRODUCTTYPES_MESSAGES.UPDATE_PRODUCTTYPE_SUCCESSFULLY,
     data: result
   })
 }

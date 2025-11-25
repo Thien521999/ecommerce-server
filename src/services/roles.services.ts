@@ -9,6 +9,7 @@ class RolesService {
     const result = await databaseService.roles.insertOne(
       new Role({
         user_id: new ObjectId(user_id),
+
         name: body.name,
         permissions: body.permissions
       })

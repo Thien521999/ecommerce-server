@@ -6,6 +6,8 @@ export interface CreateProductReqBody {
   image: string
   price: number
   countInStock: number
+  discountStartDate: Date
+  discountEndDate: Date
 }
 
 export interface UpdateProductReqBody {

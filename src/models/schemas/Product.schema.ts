@@ -11,8 +11,9 @@ interface ProductType {
   countInStock: number
   description?: string
   discount?: number
-  discountStartDate?: Date | null
-  discountEndDate?: Date | null
+  discountStartDate: Date
+  discountEndDate: Date
+  rating?: number
   sold?: number
   type_id?: ObjectId // Loại sản phẩm
   location_id?: ObjectId
@@ -38,14 +39,15 @@ export default class Product {
   discount: number
   discountStartDate: Date
   discountEndDate: Date
+  rating: number
   sold: number
-  type_id: ObjectId // Loại sản phẩm
-  location_id: ObjectId
+  type_id: ObjectId // Loại sản phẩm ProductType
+  location_id: ObjectId // Cities
   likedBy?: ObjectId[] // Danh sách user đã like
   totalLikes?: number // 0 | Tổng số lượt like
   status: productStatus // 0 | Trạng thái (0: inactive, 1: active)
   views?: number // 0 | Tổng số lượt xem
-  uniqueViews?: ObjectId[] // Danh sách user đã xem
+  uniqueViews?: ObjectId[] // Danh sách user đã xem // user
 
   created_at: Date
   updated_at: Date
@@ -62,8 +64,9 @@ export default class Product {
     this.countInStock = product.countInStock
     this.description = product.description || ''
     this.discount = product.discount || 0
-    this.discountStartDate = product.discountStartDate || date
-    this.discountEndDate = product.discountEndDate || date
+    this.discountStartDate = product.discountStartDate
+    this.discountEndDate = product.discountEndDate
+    this.rating = product.rating || 0
     this.sold = product.sold || 0
     this.type_id = product.type_id || new ObjectId()
     this.location_id = product.location_id || new ObjectId()

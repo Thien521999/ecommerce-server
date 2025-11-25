@@ -2,6 +2,7 @@ import { config } from 'dotenv'
 import { Collection, Db, MongoClient } from 'mongodb'
 import City from '~/models/schemas/City.schema'
 import DeliveryType from '~/models/schemas/DeliveryType.schema'
+import Order from '~/models/schemas/Order.schema'
 import PaymentType from '~/models/schemas/PaymentType.schema'
 import Product from '~/models/schemas/Product.schema'
 import ProductType from '~/models/schemas/ProductType.schema'
@@ -15,6 +16,7 @@ import ProductType from '~/models/schemas/ProductType.schema'
 // import Like from '~/models/schemas/Like.schema'
 // import Province from '~/models/schemas/Province.schema'
 import RefreshToken from '~/models/schemas/RefreshToken.schema'
+import Review from '~/models/schemas/review.schema'
 import Role from '~/models/schemas/Role.schema'
 import User from '~/models/schemas/User.schema'
 config()
@@ -64,12 +66,12 @@ class DatabaseService {
     }
   }
 
-  // async indexFollowers() {
-  //   const exists = await this.followers.indexExists(['user_id_1_followed_user_id_1'])
-  //   if (!exists) {
-  //     this.followers.createIndex({ user_id: 1, followed_user_id: 1 })
-  //   }
-  // }
+  async indexProducts() {
+    const exists = await this.products.indexExists(['name_1'])
+    if (!exists) {
+      this.products.createIndex({ name: 1 }, { unique: true })
+    }
+  }
 
   // async indexProvince() {
   //   const exists = await this.provinces.indexExists(['value_1'])
@@ -130,27 +132,12 @@ class DatabaseService {
   get paymenttype(): Collection<PaymentType> {
     return this.db.collection(process.env.DB_PAYMENT_TYPE_COLLECTION as string)
   }
-  // get bookmarks(): Collection<Bookmark> {
-  //   return this.db.collection(process.env.DB_BOOKMARKS_COLLECTION as string)
-  // }
-  // get likes(): Collection<Like> {
-  //   return this.db.collection(process.env.DB_LIKES_COLLECTION as string)
-  // }
-  // get hashtags(): Collection<Hashtag> {
-  //   return this.db.collection(process.env.DB_HASHTAGS_COLLECTION as string)
-  // }
-  // get provinces(): Collection<Province> {
-  //   return this.db.collection(process.env.DB_PROVINCES_COLLECTION as string)
-  // }
-  // get conversations(): Collection<Conversation> {
-  //   return this.db.collection(process.env.DB_CONVERSATIONS_COLLECTION as string)
-  // }
-  // get notifications(): Collection<Notification> {
-  //   return this.db.collection(process.env.DB_NOTIFICATIONS_COLLECTION as string)
-  // }
-  // get comments(): Collection<Comment> {
-  //   return this.db.collection(process.env.DB_COMMENTS_COLLECTION as string)
-  // }
+  get reviews(): Collection<Review> {
+    return this.db.collection(process.env.DB_REVIEW_COLLECTION as string)
+  }
+  get orders(): Collection<Order> {
+    return this.db.collection(process.env.DB_ORDER_COLLECTION as string)
+  }
 }
 
 const databaseService = new DatabaseService()

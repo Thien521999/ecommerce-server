@@ -9,6 +9,7 @@ interface UserType {
   phoneNumber?: string
   address?: string
   avatar?: string
+  role_id: ObjectId
 
   // addresses: any
 
@@ -33,6 +34,7 @@ export default class User {
   phoneNumber: string
   address: string
   avatar: string
+  role_id: ObjectId
   // addresses: Address[]
 
   email_verify_token: string
@@ -57,6 +59,7 @@ export default class User {
     this.phoneNumber = user.phoneNumber || ''
     this.address = user.address || ''
     this.avatar = user.avatar || ''
+    this.role_id = user.role_id
 
     // this.addresses = user.addresses
 

@@ -87,7 +87,7 @@ class UsersService {
     const user = await databaseService.users.findOne({ email })
     return Boolean(user)
   }
-  async register(payload: RegisterReqBody) {
+  async register(payload: RegisterReqBody, role_id: ObjectId) {
     const user_id = new ObjectId()
 
     const email_verify_token = await this.signEmailVerifyToken({
@@ -100,6 +100,7 @@ class UsersService {
         ...payload,
         _id: user_id,
         email_verify_token,
+        role_id,
         password: hashPassword(payload.password)
       })
     )

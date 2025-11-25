@@ -15,12 +15,14 @@ import {
   TokenPayload,
   VerifyEmailReqBody
 } from '~/models/requests/User.requests'
+import Role from '~/models/schemas/Role.schema'
 import User from '~/models/schemas/User.schema'
 import databaseService from '~/services/database.services'
 import usersService from '~/services/users.services'
 
 export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
-  const result = await usersService.register(req.body)
+  const role = req.role as Role
+  const result = await usersService.register(req.body, role._id as ObjectId)
 
   res.status(200).json({
     message: USERS_MESSAGES.REGISTER_SUCCESS,
