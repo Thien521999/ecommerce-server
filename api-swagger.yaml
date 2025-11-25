@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  description: Ecommerce API
+  version: '1.0.0'
+  title: Ecommerce API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: 'http://localhost:4000'
+tags:
+  - name: auth
+    description: Authentication
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginBody'
+      responses:
+        '200':
+          description: Login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Login success'
+                  result:
+                    $ref: '#/components/schemas/SuccessAuthResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /auth/me:
+    get:
+      tags:
+        - auth
+      summary: Get current user
+      operationId: getCurrentUser
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get my profile success'
+                  result:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthorized'
+
+components:
+  schemas:
+    LoginBody:
+        type: object
+        properties:
+          email:
+            type: string
+            example: 'tranhoangthiendev@gmail.com'
+          password:
+            type: string
+            example: 'aA123456@'
+    SuccessAuthResponse:
+        type: object
+        properties:
+          access_token:
+            type: string
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+          refresh_token:
+            type: string
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+    ValidationError:
+        type: object
+        properties:
+          message:
+            type: string
+            example: 'Validation error'
+          errors:
+            type: object
+            properties:
+              email:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: 'field'
+                  value:
+                    type: string
+                    example: 'tranhoangthiendev@gmail.com'
+                  msg:
+                    type: string
+                    example: 'Email or password is incorrect'
+                  path:
+                    type: string
+                    example: 'email'
+                  location:
+                    type: string
+                    example: 'body'
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        name:
+          type: string
+          example: "Thien"
+        email:
+          type: string
+          example: "tranhoangthiendev@gmail.com"
+        phoneNumber:
+          type: string
+          example: "012345678"
+        address:
+          type: string
+          example: "HCM"
+        avatar:
+          type: string
+          example: "https://example.com/avatar.jpg"
+        role_id:
+          type: string
+          format: MongoId
+          example: "69217790c7ca2c30220a3b41"
+        verify:
+          $ref: '#/components/schemas/VerifyStatus'
+        likedProducts:
+          type: array
+          items:
+            type: string
+            format: MongoId
+          example:
+            - ["692199ceb7ff6ed90b9fba9e", '692199ceb7ff6ed90b9fba9e']
+        viewedProducts:
+          type: array
+          items:
+            type: string
+            format: MongoId
+          example:
+            - ["692199ceb7ff6ed90b9fba9e", "692199ceb7ff6ed90b9fba9e"]
+        fcm_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
+    VerifyStatus:
+      type: integer
+      enum: [Unverified, Verified, Banned]
+      example: 1
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
