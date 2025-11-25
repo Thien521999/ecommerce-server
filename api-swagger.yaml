@@ -46,6 +46,263 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterBody'
+      responses:
+        '200':
+          description: Register success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Register success'
+                  result:
+                    allOf:
+                      - $ref: '#/components/schemas/SuccessAuthResponse'
+                      - type: object
+                        properties:
+                          email_verify_token:
+                            type: string
+                            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Logout
+      operationId: logout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutBody'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logout success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Logout success'
+                  result:
+                    $ref: '#/components/schemas/SuccessAuthResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Jwt expired'
+  /auth/verify-email:
+    post:
+      tags:
+        - auth
+      summary: Verify email
+      operationId: verifyEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailBody'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Verify email success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Verify email success'
+                  result:
+                    $ref: '#/components/schemas/SuccessAuthResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Jwt expired'
+  /auth/forgot-password:
+    post:
+      tags:
+        - auth
+      summary: Forgot password
+      operationId: forgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordBody'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Forgot password success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Check email to reset password'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /auth/verify-forgot-password:
+    post:
+      tags:
+        - auth
+      summary: Verify forgot password
+      operationId: verifyForgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyForgotPasswordBody'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Verify forgot password success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Verify forgot password success'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /auth/reset-password:
+    post:
+      tags:
+        - auth
+      summary: Reset password
+      operationId: resetPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordBody'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Reset password success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Reset password success'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthorized'
+  /auth/refresh-token:
+    post:
+      tags:
+        - auth
+      summary: Refresh token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenBody'
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Refresh token success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Refresh token success'
+                  result:
+                    $ref: '#/components/schemas/SuccessAuthResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Reresh token is requried || Jwt malformed'
   /auth/me:
     get:
       tags:
@@ -77,54 +334,318 @@ paths:
                   message:
                     type: string
                     example: 'Unauthorized'
+  /auth/me/{id}:
+    get:
+      tags:
+        - auth
+      summary: Get user by id
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: string
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get user by id success'
+                  result:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'User not found'
+  /auth/update/me:
+    patch:
+      tags:
+        - auth
+      summary: Update my profile
+      operationId: updateMyProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMeBody'
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Update my profile success'
+                  result:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'User not found'
+  /auth/resend-verify-email:
+    post:
+      tags:
+        - auth
+      summary: Resend verify email
+      operationId: resendVerifyEmail
+      # requestBody:
+      #   required: true
+      #   content:
+      #     application/json:
+      #       schema:
+      #         $ref: '#/components/schemas/ResendVerifyEmailBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Resend verify email success'
+                  result:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'User not found'
+  /auth/all:
+    get:
+      tags:
+        - auth
+      summary: Get all active users
+      operationId: getAllActiveUsers
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all active users success'
+                  data:
+                    type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+                      page:
+                        type: integer
+                        example: 1
+                      limit:
+                        type: integer
+                        example: 10
+                      total:
+                        type: integer
+                        example: 10
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthorized'
 
 components:
   schemas:
+    RegisterBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Thien'
+        email:
+          type: string
+          example: 'tranhoangthiendev@gmail.com'
+        password:
+          type: string
+          example: 'aA123456@'
+        confirm_password:
+          type: string
+          example: 'aA123456@'
+        role_id:
+          type: string
+          example: '69217790c7ca2c30220a3b41'
     LoginBody:
-        type: object
-        properties:
-          email:
-            type: string
-            example: 'tranhoangthiendev@gmail.com'
-          password:
-            type: string
-            example: 'aA123456@'
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'tranhoangthiendev@gmail.com'
+        password:
+          type: string
+          example: 'aA123456@'
+    LogoutBody:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+    UpdateMeBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Thien'
+        email:
+          type: string
+          example: 'tranhoangthiendev@gmail.com'
+        role_id:
+          type: string
+          example: '69217790c7ca2c30220a3b41'
+        phoneNumber:
+          type: string
+          example: '0123456789'
+        address:
+          type: string
+          example: '123 Main St, Anytown, USA'
+        avatar:
+          type: string
+          example: 'https://example.com/avatar.jpg'
+    VerifyEmailBody:
+      type: object
+      properties:
+        email_verify_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+    ForgotPasswordBody:
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'tranhoangthiendev@gmail.com'
+    VerifyForgotPasswordBody:
+      type: object
+      properties:
+        forgot_password_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+    ResetPasswordBody:
+      type: object
+      properties:
+        forgot_password_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        password:
+          type: string
+          example: 'aA123456@'
+        confirm_password:
+          type: string
+          example: 'aA123456@'
+    RefreshTokenBody:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
     SuccessAuthResponse:
-        type: object
-        properties:
-          access_token:
-            type: string
-            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-          refresh_token:
-            type: string
-            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        refresh_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
     ValidationError:
-        type: object
-        properties:
-          message:
-            type: string
-            example: 'Validation error'
-          errors:
-            type: object
-            properties:
-              email:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    example: 'field'
-                  value:
-                    type: string
-                    example: 'tranhoangthiendev@gmail.com'
-                  msg:
-                    type: string
-                    example: 'Email or password is incorrect'
-                  path:
-                    type: string
-                    example: 'email'
-                  location:
-                    type: string
-                    example: 'body'
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Validation error'
+        errors:
+          type: object
+          properties:
+            email:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: 'field'
+                value:
+                  type: string
+                  example: 'tranhoangthiendev@gmail.com'
+                msg:
+                  type: string
+                  example: 'Email or password is incorrect'
+                path:
+                  type: string
+                  example: 'email'
+                location:
+                  type: string
+                  example: 'body'
     User:
       type: object
       properties:
@@ -182,6 +703,7 @@ components:
       type: integer
       enum: [Unverified, Verified, Banned]
       example: 1
+
   securitySchemes:
     BearerAuth:
       type: http

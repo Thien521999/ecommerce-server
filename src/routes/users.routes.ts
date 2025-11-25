@@ -26,6 +26,7 @@ import {
   registerValidator,
   resetPasswordValidator,
   updateMeValidator,
+  verifiedIdValidator,
   verifiedUserValidator,
   verifyForgotPasswordTokenValidator
 } from '~/middlewares/users.middlewares'
@@ -120,7 +121,7 @@ usersRouter.get('/me', accessTokenValidator, wrapRequestHandler(getMeController)
  * Method: GET
  * Header:
  */
-usersRouter.get('/me/:_id', wrapRequestHandler(getMeByIdController))
+usersRouter.get('/me/:_id', verifiedIdValidator, wrapRequestHandler(getMeByIdController))
 
 /*
  * Desciption. Update my profile
@@ -130,19 +131,11 @@ usersRouter.get('/me/:_id', wrapRequestHandler(getMeByIdController))
  * Body: UserSchema
  */
 usersRouter.patch(
-  '/me',
+  '/update/me',
   accessTokenValidator,
   verifiedUserValidator,
   updateMeValidator,
-  fiterMiddeware<UpdatedMeReqBody>([
-    'name',
-    'date_of_birth',
-    'bio',
-    'location',
-    'avatar',
-    'cover_photo',
-    'isFirstLogin'
-  ]),
+  fiterMiddeware<UpdatedMeReqBody>(['name', 'email', 'role_id', 'phoneNumber', 'address', 'avatar']),
   wrapRequestHandler(updateMeController)
 )
 
