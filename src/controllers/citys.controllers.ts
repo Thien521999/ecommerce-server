@@ -21,7 +21,7 @@ export const updateCityController = async (req: Request<ParamsDictionary, any, C
   const result = await citysService.updateCity(city_id, req.body)
 
   res.json({
-    message: CITYS_MESSAGES.CREATE_CITY_SUCCESSFULLY,
+    message: CITYS_MESSAGES.UPDATE_CITY_SUCCESSFULLY,
     data: result
   })
 }
@@ -32,7 +32,7 @@ export const getDetailCityController = async (req: Request, res: Response) => {
   const result = await citysService.getDetailCity(city_id)
 
   res.json({
-    message: CITYS_MESSAGES.CREATE_CITY_SUCCESSFULLY,
+    message: CITYS_MESSAGES.GET_CITY_BY_ID_SUCCESSFULLY,
     data: result
   })
 }

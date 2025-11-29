@@ -8,6 +8,8 @@ export interface CreateProductReqBody {
   countInStock: number
   discountStartDate: Date
   discountEndDate: Date
+  location_id: string
+  type_id: string
 }
 
 export interface UpdateProductReqBody {

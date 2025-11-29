@@ -14,6 +14,20 @@ servers:
 tags:
   - name: auth
     description: Authentication
+  - name: cities
+    description: Cities
+  - name: roles
+    description: Roles
+  - name: paymenttypes
+    description: Payment types
+  - name: deliverytypes
+    description: Delivery types
+  - name: reviews
+    description: Reviews
+  - name: products
+    description: Products
+  - name: orders
+    description: Orders
 paths:
   /auth/login:
     post:
@@ -518,8 +532,1455 @@ paths:
                     type: string
                     example: 'Unauthorized'
 
+  /cities:
+    post:
+      tags:
+        - cities
+      summary: Create city
+      operationId: createCity
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Create city success'
+                  result:
+                    $ref: '#/components/schemas/City'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /cities/{id}:
+    get:
+      tags:
+        - cities
+      summary: Get city by id
+      operationId: getCityById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /cities/update/{id}:
+    put:
+      tags:
+        - cities
+      summary: Update city by id
+      operationId: updateCityById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /cities/delete/{id}:
+    delete:
+      tags:
+        - cities
+      summary: Delete city by id
+      operationId: deleteCityById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete city success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /cities/all:
+    get:
+      tags:
+        - cities
+      summary: Get all city
+      operationId: getAllCity
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all city success'
+                  data:
+                    type: object
+                    properties:
+                      cities:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/City'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 1
+                      total_page:
+                        type: number
+                        example: 1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+
+  /roles/all:
+    get:
+      tags:
+        - roles
+      summary: Get all role
+      operationId: getAllRole
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all role success'
+                  data:
+                    type: object
+                    properties:
+                      roles:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Role'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 1
+                      total_page:
+                        type: number
+                        example: 1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /roles:
+    post:
+      tags:
+        - roles
+      summary: Create role
+      operationId: createRole
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /roles/{role_id}:
+    put:
+      tags:
+        - roles
+      summary: Update role
+      operationId: updateRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: role_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Update role success'
+                  data:
+                    $ref: '#/components/schemas/Role'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /roles/{id}:
+    get:
+      tags:
+        - roles
+      summary: Get detail role
+      operationId: getDetailRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get detail role success'
+                  data:
+                    $ref: '#/components/schemas/Role'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /roles/delete/{id}:
+    delete:
+      tags:
+        - roles
+      summary: Delete role
+      operationId: deleteRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete role success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+
+  /paymenttypes:
+    post:
+      tags:
+        - paymenttypes
+      summary: Create payment type
+      operationId: createPaymentType
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentTypeBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Create payment type success'
+                  data:
+                    $ref: '#/components/schemas/PaymentType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /paymenttypes/update/{id}:
+    put:
+      tags:
+        - paymenttypes
+      summary: Update payment type
+      operationId: updatePaymentType
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentTypeBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Update payment type success'
+                  data:
+                    $ref: '#/components/schemas/PaymentType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /paymenttypes/delete/{id}:
+    delete:
+      tags:
+        - paymenttypes
+      summary: Delete payment type
+      operationId: deletePaymentType
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete payment type success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /paymenttypes/{id}:
+    get:
+      tags:
+        - paymenttypes
+      summary: Get detail payment type
+      operationId: getDetailPaymentType
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get detail payment type success'
+                  data:
+                    $ref: '#/components/schemas/PaymentType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /paymenttypes/all:
+    get:
+      tags:
+        - paymenttypes
+      summary: Get all payment type
+      operationId: getAllPaymentType
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all payment type success'
+                  data:
+                    type: object
+                    properties:
+                      paymenttypes:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PaymentType'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 10
+                      total_page:
+                        type: number
+                        example: 1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+
+  /deliverytypes/{id}:
+    get:
+      tags:
+        - deliverytypes
+      summary: Get detail delivery type
+      operationId: getDetailDeliveryType
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get detail delivery type success'
+                  data:
+                    $ref: '#/components/schemas/DeliveryType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /deliverytypes/all:
+    get:
+      tags:
+        - deliverytypes
+      summary: Get all delivery types
+      operationId: getAllDeliveryTypes
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all delivery types success'
+                  data:
+                    type: object
+                    properties:
+                      deliverytypes:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DeliveryType'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 10
+                      total_page:
+                        type: number
+                        example: 1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /deliverytypes/delete/{id}:
+    delete:
+      tags:
+        - deliverytypes
+      summary: Delete delivery type by id
+      operationId: deleteDeliveryTypeById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete delivery type success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /deliverytypes:
+    post:
+      tags:
+        - deliverytypes
+      summary: Create delivery type
+      operationId: createDeliveryType
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryTypeBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Create delivery type success'
+                  data:
+                    $ref: '#/components/schemas/DeliveryType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+  /deliverytypes/update/{id}:
+    put:
+      tags:
+        - deliverytypes
+      summary: Update delivery type by id
+      operationId: updateDeliveryTypeById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryTypeBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Update delivery type success'
+                  data:
+                    $ref: '#/components/schemas/DeliveryType'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+
+  /reviews:
+    post:
+      tags:
+        - reviews
+      summary: Create review
+      operationId: createReview
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Create review success'
+                  data:
+                    $ref: '#/components/schemas/Review'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /reviews/${id}:
+    put:
+      tags:
+        - reviews
+      summary: Update review by id
+      operationId: updateReviewById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: MongoId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Update review success'
+                  data:
+                    $ref: '#/components/schemas/Review'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /reviews/delete/${id}:
+    delete:
+      tags:
+        - reviews
+      summary: Delete review by id
+      operationId: deleteReviewById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: MongoId
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete review success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /reviews/${review_id}:
+    get:
+      tags:
+        - reviews
+      summary: Get review by id
+      operationId: getReviewById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: MongoId
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get review success'
+                  data:
+                    $ref: '#/components/schemas/Review'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /reviews/all:
+    get:
+      tags:
+        - reviews
+      summary: Get all reviews
+      operationId: getAllReviews
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all reviews success'
+                  data:
+                    type: object
+                    properties:
+                      reviews:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Review'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 1
+                      total_page:
+                        type: number
+                        example: 1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+
+  /products:
+    post:
+      tags:
+        - products
+      summary: Create product
+      operationId: createProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Create product success'
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/update/{id}:
+    put:
+      tags:
+        - products
+      summary: Update product
+      operationId: updateProduct
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: MongoId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBody'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Update product success'
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/{id}:
+    get:
+      tags:
+        - products
+      summary: Get product by id
+      operationId: getProductById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: MongoId
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get product success'
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/all:
+    get:
+      tags:
+        - products
+      summary: Get all products
+      operationId: getAllProducts
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: productType
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: productLocation
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: minStar
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: maxStar
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+            default: 'created_at desc'
+        - name: statusFilter
+          in: query
+          required: false
+          schema:
+            type: string
+            default: '1'
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all products success'
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 10
+                      total_page:
+                        type: number
+                        example: 1
+                      total_count:
+                        type: number
+                        example: 1
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/delete/{id}:
+    delete:
+      tags:
+        - products
+      summary: Delete product
+      operationId: deleteProduct
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: MongoId
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete product success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/liked/me:
+    get:
+      tags:
+        - products
+      summary: Get all products liked by me
+      operationId: getAllProductLiked
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all products liked by me success'
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 10
+                      total_page:
+                        type: number
+                        example: 1
+
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/viewed/me:
+    get:
+      tags:
+        - products
+      summary: Get all products viewed by me
+      operationId: getAllProductViewed
+      security:
+        - BearerAuth: []
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get all products viewed by me success'
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+                      page:
+                        type: number
+                        example: 1
+                      limit:
+                        type: number
+                        example: 10
+                      total_page:
+                        type: number
+                        example: 1
+
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/like:
+    post:
+      tags:
+        - products
+      summary: Like product
+      operationId: likeProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  format: MongoId
+                  example: '679d3b5b6d6d6d6d6d6d6d6d'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Like product success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/unlike:
+    post:
+      tags:
+        - products
+      summary: Unlike product
+      operationId: unlikeProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  format: MongoId
+                  example: '679d3b5b6d6d6d6d6d6d6d6d'
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Unlike product success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+  /products/delete-many:
+    delete:
+      tags:
+        - products
+      summary: Delete many products
+      operationId: deleteManyProduct
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productIds:
+                  type: array
+                  items:
+                    type: string
+                    format: MongoId
+                  example: ['679d3b5b6d6d6d6d6d6d6d6d', '679d3b5b6d6d6d6d6d6d6d6d']
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Delete many products success'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+
+  # /orders:
+
 components:
   schemas:
+    Unauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Unauthorized'
     RegisterBody:
       type: object
       properties:
@@ -703,7 +2164,303 @@ components:
       type: integer
       enum: [Unverified, Verified, Banned]
       example: 1
+    CityBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "HCM"
+    City:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        user_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        name:
+          type: string
+          example: "HCM"
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
+    Role:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        user_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        name:
+          type: string
+          example: "Admin"
+        permissions:
+          type: array
+          items:
+            type: string
+            example: "ADMIN.GRANTED"
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
+    RoleBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Admin"
+        permissions:
+          type: array
+          items:
+            type: string
+            example: "ADMIN.GRANTED"
+    PaymentType:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        user_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        name:
+          type: string
+          example: "PAYMENT_LATER"
+        type:
+          type: string
+          example: "PAYMENT_LATER"
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
+    DeliveryType:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        user_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        name:
+          type: string
+          example: "PAYMENT_LATER"
+        price:
+          type: number
+          example: 100000
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
 
+    DeliveryTypeBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "PAYMENT_LATER"
+        price:
+          type: number
+          example: 100000
+    PaymentTypeBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "PAYMENT_LATER"
+        type:
+          type: string
+          example: "PAYMENT_LATER"
+    ReviewBody:
+      type: object
+      properties:
+        content:
+          type: string
+          example: "ok"
+        star:
+          type: number
+          example: 5
+        product_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+    Review:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        user_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        product_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        content:
+          type: string
+          example: "ok"
+        star:
+          type: number
+          example: 5
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
+    ProductBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Product 1"
+        image:
+          type: string
+          example: "https://example.com/image.jpg"
+        countInStock:
+          type: number
+          example: 100000
+        price:
+          type: number
+          example: 10
+        discountStartDate:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        discountEndDate:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        type_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        location_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        user_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        name:
+          type: string
+          example: "Product 1"
+        slug:
+          type: string
+          example: "product-1"
+        image:
+          type: string
+          example: "https://example.com/image.jpg"
+        price:
+          type: number
+          example: 10
+        countInStock:
+          type: number
+          example: 100000
+        description:
+          type: string
+          example: "Product description"
+        discount:
+          type: number
+          example: 10
+        discountStartDate:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        discountEndDate:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        rating:
+          type: number
+          example: 1
+        sold:
+          type: number
+          example: 1
+        type_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        location_id:
+          type: string
+          format: MongoId
+          example: "69218ec683ccdc34f38abfbd"
+        likedBy:
+          type: array
+          items:
+            type: string
+            format: MongoId
+            example: "69218ec683ccdc34f38abfbd"
+        totalLikes:
+          type: number
+          example: 1
+        status:
+          type: number
+          example: 1
+        views:
+          type: number
+          example: 1
+        uniqueViews:
+          type: array
+          items:
+            type: string
+            format: MongoId
+            example: "69218ec683ccdc34f38abfbd"
+        created_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:21:58.648Z"
+        updated_at:
+          type: string
+          format: ISO8601
+          example: "2025-11-22T10:45:46.131Z"
+    NotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Not found'
   securitySchemes:
     BearerAuth:
       type: http

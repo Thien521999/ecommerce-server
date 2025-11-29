@@ -105,36 +105,6 @@ export const createProductValidator = validate(
   checkSchema(
     {
       name: nameSchema,
-      // slug: {
-      //   notEmpty: {
-      //     errorMessage: PRODUCTS_MESSAGES.SLUG_IS_REQUIRED
-      //   },
-      //   isString: {
-      //     errorMessage: PRODUCTS_MESSAGES.SLUG_MUST_BE_A_STRING
-      //   },
-      //   trim: true,
-      //   isLength: {
-      //     options: {
-      //       min: 1,
-      //       max: 100
-      //     },
-      //     errorMessage: PRODUCTS_MESSAGES.SLUG_LENGTH_MUST_BE_FROM_1_TO_100
-      //   },
-      //   custom: {
-      //     options: async (value) => {
-      //       const slug = await databaseService.products.findOne({ slug: value })
-
-      //       if (slug) {
-      //         throw new ErrorWithStatus({
-      //           message: PRODUCTS_MESSAGES.SLUG_EXISTED,
-      //           status: HTTP_STATUS.NOT_FOUND
-      //         })
-      //       }
-
-      //       return true
-      //     }
-      //   }
-      // },
       image: imageSchema,
       countInStock: {
         notEmpty: {
@@ -154,6 +124,51 @@ export const createProductValidator = validate(
           errorMessage: PRODUCTS_MESSAGES.PRICE_MUST_BE_A_NUMBER
         }
       },
+      type_id: {
+        notEmpty: {
+          errorMessage: PRODUCTS_MESSAGES.TYPE_ID_IS_REQUIRED
+        },
+        isString: {
+          errorMessage: PRODUCTS_MESSAGES.TYPE_ID_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value) => {
+            const type = await databaseService.producttypes.findOne({ _id: new ObjectId(value) })
+
+            if (!type) {
+              throw new ErrorWithStatus({
+                message: PRODUCTS_MESSAGES.TYPE_NOT_FOUND,
+                status: HTTP_STATUS.NOT_FOUND
+              })
+            }
+
+            return Boolean(type)
+          }
+        }
+      },
+      location_id: {
+        notEmpty: {
+          errorMessage: PRODUCTS_MESSAGES.LOCATION_ID_IS_REQUIRED
+        },
+        isString: {
+          errorMessage: PRODUCTS_MESSAGES.LOCATION_ID_MUST_BE_A_STRING
+        },
+        custom: {
+          options: async (value) => {
+            const location = await databaseService.citys.findOne({ _id: new ObjectId(value) })
+
+            if (!location) {
+              throw new ErrorWithStatus({
+                message: PRODUCTS_MESSAGES.LOCATION_NOT_FOUND,
+                status: HTTP_STATUS.NOT_FOUND
+              })
+            }
+
+            return Boolean(location)
+          }
+        }
+      },
+
       discountStartDate: discountStartDateSchema,
       discountEndDate: discountEndDateSchema
     },

@@ -91,8 +91,8 @@ export const likeProductController = async (req: Request<ParamsDictionary, any, 
   const result = await productsServices.likeProduct(user_id, product_id)
 
   res.json({
-    message: result.message,
-    data: null
+    message: result.message
+    // data: null
   })
 }
 
@@ -103,8 +103,8 @@ export const unlikeProductController = async (req: Request<ParamsDictionary, any
   const result = await productsServices.unlikeProduct(user_id, product_id)
 
   res.json({
-    message: result.message,
-    data: null
+    message: result.message
+    // data: null
   })
 }
 
@@ -114,7 +114,7 @@ export const deleteManyProductController = async (req: Request, res: Response) =
   const result = await productsServices.deleteManyProduct(productIds)
 
   res.json({
-    message: result.message,
-    data: null
+    message: result.message
+    // data: null
   })
 }

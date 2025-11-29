@@ -99,7 +99,13 @@ export const PRODUCTS_MESSAGES = {
   THE_PRODUCT_IS_NOT_LIKED_YET: 'The product is not liked yet',
   UNLIKED_PRODUCT_SUCCESSFULLY: 'Unliked product successfully',
   DELETE_PRODUCTS_SUCCESS: 'Delete products success',
-  GET_ALL_PRODUCT_SUCCESSFULLY: 'Get all product successfully'
+  GET_ALL_PRODUCT_SUCCESSFULLY: 'Get all product successfully',
+  TYPE_ID_IS_REQUIRED: 'Type id is required',
+  TYPE_ID_MUST_BE_A_STRING: 'Type id must be a string',
+  TYPE_NOT_FOUND: 'Type not found',
+  LOCATION_ID_IS_REQUIRED: 'Location id is required',
+  LOCATION_ID_MUST_BE_A_STRING: 'Location id must be a string',
+  LOCATION_NOT_FOUND: 'Location not found'
 } as const
 
 export const CITYS_MESSAGES = {
@@ -107,6 +113,8 @@ export const CITYS_MESSAGES = {
   NAME_MUST_BE_A_STRING: 'Name must be a string',
   NAME_ALREADY_EXISTS: 'Name already exists',
   CREATE_CITY_SUCCESSFULLY: 'Create city successfully',
+  GET_CITY_BY_ID_SUCCESSFULLY: 'Get city by id successfully',
+  UPDATE_CITY_SUCCESSFULLY: 'Update city successfully',
   DELETE_CITY_SUCCESS: 'Delete city success',
   GET_ALL_CITY: 'Get all city'
 } as const

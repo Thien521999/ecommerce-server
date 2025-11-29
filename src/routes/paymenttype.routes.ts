@@ -21,7 +21,7 @@ paymenttypeRouter.post(
 )
 
 paymenttypeRouter.put(
-  '/',
+  '/update/:id',
   accessTokenValidator,
   verifiedUserValidator,
   paymenttypeBodyValidator,
@@ -31,7 +31,7 @@ paymenttypeRouter.put(
 paymenttypeRouter.get('/:id', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getPaymentTypeController))
 
 paymenttypeRouter.delete(
-  '/:id',
+  '/delete/:id',
   accessTokenValidator,
   verifiedUserValidator,
   wrapRequestHandler(deletePaymentTypeController)

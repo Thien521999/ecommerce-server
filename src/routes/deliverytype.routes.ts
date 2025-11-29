@@ -43,7 +43,7 @@ deliverytypeRouter.delete(
 )
 
 deliverytypeRouter.get(
-  '/',
+  '/all',
   accessTokenValidator,
   verifiedUserValidator,
   wrapRequestHandler(getAllDeliveryTypeController)

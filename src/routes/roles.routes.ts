@@ -35,6 +35,6 @@ rolesRouter.get('/:id', accessTokenValidator, verifiedUserValidator, wrapRequest
 
 rolesRouter.delete('/:id', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(deleteRoleController))
 
-rolesRouter.get('/', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllRoleController))
+rolesRouter.get('/all', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllRoleController))
 
 export default rolesRouter

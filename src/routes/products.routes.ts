@@ -34,7 +34,7 @@ productsRouter.post(
 )
 
 productsRouter.put(
-  '/:id',
+  '/update/:id',
   accessTokenValidator,
   verifiedUserValidator,
   productIdValidator,
@@ -57,6 +57,8 @@ productsRouter.put(
   wrapRequestHandler(updateProductController)
 )
 
+productsRouter.get('/all', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllProductsController))
+
 productsRouter.get(
   '/:id',
   accessTokenValidator,
@@ -66,7 +68,7 @@ productsRouter.get(
 )
 
 productsRouter.delete(
-  '/:id',
+  '/delete/:id',
   accessTokenValidator,
   verifiedUserValidator,
   productIdValidator,
@@ -86,8 +88,6 @@ productsRouter.get(
   verifiedUserValidator,
   wrapRequestHandler(getAllProductViewedController)
 )
-
-productsRouter.get('/', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllProductsController))
 
 productsRouter.post(
   '/like',

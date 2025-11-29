@@ -42,10 +42,7 @@ export const deleteRoleController = async (req: Request, res: Response) => {
 
   const result = await rolesService.deleteRole(role_id)
 
-  res.json({
-    message: ROLES_MESSAGES.CREATE_ROLE_SUCCESSFULLY,
-    data: result
-  })
+  res.json(result)
 }
 
 export const getAllRoleController = async (req: Request, res: Response) => {

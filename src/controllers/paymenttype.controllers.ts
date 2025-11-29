@@ -48,10 +48,7 @@ export const deletePaymentTypeController = async (req: Request, res: Response) =
 
   const result = await paymentTypeService.deletePaymentType(payment_type_id)
 
-  res.json({
-    message: PAYMENT_TYPE_MESSAGES.DELETE_PAYEMNT_TYPE_SUCCESSFULLY,
-    data: result
-  })
+  res.json(result)
 }
 
 export const getAllPaymentTypeController = async (req: Request, res: Response) => {

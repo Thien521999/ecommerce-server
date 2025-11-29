@@ -35,6 +35,6 @@ reviewsRouter.get('/:id', accessTokenValidator, verifiedUserValidator, wrapReque
 
 reviewsRouter.delete('/:id', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(deleteReviewController))
 
-reviewsRouter.get('/', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllReviewController))
+reviewsRouter.get('/all', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllReviewController))
 
 export default reviewsRouter

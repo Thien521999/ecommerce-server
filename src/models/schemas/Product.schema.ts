@@ -8,7 +8,7 @@ interface ProductType {
   slug?: string
   image: string
   price: number
-  countInStock: number
+  countInStock: number // Số lượng tồn kho
   description?: string
   discount?: number
   discountStartDate: Date

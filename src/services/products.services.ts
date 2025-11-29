@@ -21,7 +21,9 @@ class ProductsService {
         countInStock: body.countInStock,
         price: body.price,
         discountStartDate: body.discountStartDate,
-        discountEndDate: body.discountEndDate
+        discountEndDate: body.discountEndDate,
+        location_id: new ObjectId(body.location_id),
+        type_id: new ObjectId(body.type_id)
       })
     )
 
@@ -52,11 +54,57 @@ class ProductsService {
   }
 
   async getDetailProduct(product_id: string) {
-    const product = await databaseService.products.findOne({
-      _id: new ObjectId(product_id)
-    })
+    const products = await databaseService.products
+      .aggregate([
+        {
+          $match: {
+            _id: new ObjectId(product_id)
+          }
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'user_id',
+            foreignField: '_id',
+            as: 'user'
+          }
+        },
+        {
+          $unwind: {
+            path: '$user',
+            preserveNullAndEmptyArrays: true // Giữ product ngay cả khi không tìm thấy user
+          }
+        },
+        {
+          $project: {
+            'user.password': 0, // Loại bỏ password khỏi user object
+            'user.forgot_password_token': 0, // Loại bỏ các token nhạy cảm
+            'user.email_verify_token': 0,
+            'user.likedProducts': 0,
+            'user.viewedProducts': 0,
+            'user.fcm_token': 0
+          }
+        },
+        {
+          $lookup: {
+            from: 'producttypes',
+            localField: 'type_id',
+            foreignField: '_id',
+            as: 'type'
+          }
+        },
+        {
+          $lookup: {
+            from: 'cities',
+            localField: 'location_id',
+            foreignField: '_id',
+            as: 'address'
+          }
+        }
+      ])
+      .toArray()
 
-    return product
+    return products[0] || null
   }
 
   async deleteProduct(product_id: string) {
@@ -419,16 +467,17 @@ class ProductsService {
     // Count total documents with the same filters
     const countPipeline = [...filterStages, { $count: 'total' }]
     const countResult = await databaseService.products.aggregate(countPipeline).toArray()
-    const totalCount = countResult.length > 0 ? countResult[0].total : 0
-    const totalPage = Math.ceil(totalCount / limit)
+    const total_count = countResult.length > 0 ? countResult[0].total : 0
+    const total_page = Math.ceil(total_count / limit)
 
     return {
-      status: 200,
       message: 'Success',
       data: {
         products,
-        totalPage,
-        totalCount
+        page,
+        limit,
+        total_page,
+        total_count
       }
     }
   }

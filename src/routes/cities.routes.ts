@@ -23,7 +23,7 @@ citiesRouter.post(
 )
 
 citiesRouter.put(
-  '/:id',
+  '/update/:id',
   accessTokenValidator,
   verifiedUserValidator,
   cityBodyValidator,
@@ -31,10 +31,9 @@ citiesRouter.put(
   wrapRequestHandler(updateCityController)
 )
 
+citiesRouter.get('/all', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllCityController))
 citiesRouter.get('/:id', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getDetailCityController))
 
 citiesRouter.delete('/:id', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(deleteCityController))
-
-citiesRouter.get('/', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getAllCityController))
 
 export default citiesRouter
